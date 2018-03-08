@@ -10,11 +10,6 @@
     <script type="text/javascript" src="{{ url_for('static', filename='nomnoml.js') }}"></script>
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function() {
-            // Use a "/test" namespace.
-            // An application can open a connection on multiple namespaces, and
-            // Socket.IO will multiplex all those connections on a single
-            // physical channel. If you don't care about multiple channels, you
-            // can set the namespace to an empty string.
             namespace = '/test';
 
             // Connect to the Socket.IO server.
@@ -23,19 +18,14 @@
             var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
 
             // Event handler for new connections.
-            // The callback function is invoked when a connection with the
-            // server is established.
             socket.on('connect', function() {
                 console.log("Connected with server\n");
             });
 
 
             // Event handler for server sent data.
-            // The callback function is invoked whenever the server emits data
-            // to the client. The data is then displayed in the "Received"
-            // section of the page.
-            socket.on('server', function(msg) {
-                console.log(msg.data)
+            socket.on('serve', function(msg) {
+                // console.log(msg.data)
                 var canvas = document.getElementById('target-canvas');
                 var noml = msg.data
                 nomnoml.draw(canvas, noml);
@@ -63,6 +53,18 @@
                     sum += ping_pong_times[i];
                 $('#ping-pong').text(Math.round(10 * sum / ping_pong_times.length) / 10);
             });
+            $('form#graph1').submit(function(event) {
+                socket.emit('graph1');
+                return false;
+            });
+            $('form#graph2').submit(function(event) {
+                socket.emit('graph2');
+                return false;
+            });
+            $('form#graph3').submit(function(event) {
+                socket.emit('graph3');
+                return false;
+            });
             $('form#disconnect').submit(function(event) {
                 socket.emit('disconnect_request');
                 return false;
@@ -75,8 +77,17 @@
     <p>Async mode is: <b>{{ async_mode }}</b></p>
     <p>Average ping/pong latency: <b><span id="ping-pong"></span>ms</b></p>
     <canvas id="target-canvas"></canvas>
+    <form id="graph1" method="post" action="#">
+      <input type="submit" value="graph1">
+    </form>
+    <form id="graph2" method="post" action="#">
+      <input type="submit" value="graph2">
+    </form>
+    <form id="graph3" method="post" action="#">
+      <input type="submit" value="graph3">
+    </form>
     <form id="disconnect" method="POST" action="#">
-        <input type="submit" value="Disconnect">
+      <input type="submit" value="Disconnect">
     </form>
 
 </body>
