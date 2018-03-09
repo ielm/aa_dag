@@ -16,119 +16,148 @@ thread = None
 thread_lock = Lock()
 
 graph1 = """
-[<abstract>BUILD-CHAIR]-> 0 [GET-SCREWDRIVER_0]
-[<abstract>BUILD-CHAIR]-> 1 [BUILD-LEGS_1]
-[<abstract>BUILD-CHAIR]-> 2 [BUILD-BACK_2]
-[<abstract>BUILD-CHAIR]-> 3 [BUILD-SEAT_3]
-[<abstract>BUILD-CHAIR]-> 4 [ATTACH-BACK-AND-SEAT_4]
+  [<abstract>BUILD-CHAIR]-> 0 [GET-SCREWDRIVER_0]
+  [<abstract>BUILD-CHAIR]-> 1 [BUILD-LEGS_1]
+  [<abstract>BUILD-CHAIR]-> 2 [BUILD-BACK_2]
+  [<abstract>BUILD-CHAIR]-> 3 [BUILD-SEAT_3]
+  [<abstract>BUILD-CHAIR]-> 4 [ATTACH-BACK-AND-SEAT_4]
 
 
-[GET-SCREWDRIVER_0] --> [<abstract>GET-SCREWDRIVER|get-screwdriver]
+  [GET-SCREWDRIVER_0] --> [<abstract>GET-SCREWDRIVER|get-screwdriver]
 
-[BUILD-LEGS_1] -> [BUILD-BACK-LEG_0]
-[BUILD-LEGS_1] -> [BUILD-BACK-LEG_1]
-[BUILD-LEGS_1] -> [BUILD-FRONT-LEG_0]
-[BUILD-LEGS_1] -> [BUILD-FRONT-LEG_1]
+  [BUILD-LEGS_1] -> [BUILD-BACK-LEG_0]
+  [BUILD-LEGS_1] -> [BUILD-BACK-LEG_1]
+  [BUILD-LEGS_1] -> [BUILD-FRONT-LEG_0]
+  [BUILD-LEGS_1] -> [BUILD-FRONT-LEG_1]
 
-[BUILD-BACK-LEG_0] --> [<abstract>BACK-LEGS|get-dowel|get-leg|get-top-bracket]
-[BUILD-BACK-LEG_1] --> [<abstract>BACK-LEGS|get-dowel|get-leg|get-top-bracket]
-
-
-[BUILD-FRONT-LEG_0] --> [<abstract>FRONT-LEGS|get-dowel|get-leg|tighten-screw]
-[BUILD-FRONT-LEG_1] --> [<abstract>FRONT-LEGS|get-dowel|get-leg|tighten-screw]
+  [BUILD-BACK-LEG_0] --> [<abstract>BACK-LEGS|get-dowel|get-leg|get-top-bracket]
+  [BUILD-BACK-LEG_1] --> [<abstract>BACK-LEGS|get-dowel|get-leg|get-top-bracket]
 
 
-[BUILD-BACK_2] --> [<abstract>BUILD-BACK|get-board|get-bracket|tighten-screw]
+  [BUILD-FRONT-LEG_0] --> [<abstract>FRONT-LEGS|get-dowel|get-leg|tighten-screw]
+  [BUILD-FRONT-LEG_1] --> [<abstract>FRONT-LEGS|get-dowel|get-leg|tighten-screw]
 
-[BUILD-SEAT_3] --> [<abstract>BUILD-SEAT|get-board|get-bracket|tighten-screw]
 
-[ATTACH-BACK-AND-SEAT_4] --> [<abstract>ATTACH-BACK-AND-SEAT|get-board|get-bracket|tighten-screw]"""
+  [BUILD-BACK_2] --> [<abstract>BUILD-BACK|get-board|get-bracket|tighten-screw]
+
+  [BUILD-SEAT_3] --> [<abstract>BUILD-SEAT|get-board|get-bracket|tighten-screw]
+
+  [ATTACH-BACK-AND-SEAT_4] --> [<abstract>ATTACH-BACK-AND-SEAT|get-board|get-bracket|tighten-screw]"""
+
+graph4 = """
+  [<abstract>BUILD-CHAIR]-> 0 [GET-SCREWDRIVER_0]
+  [<abstract>BUILD-CHAIR]-> 1 [BUILD-LEGS_1]
+  [<abstract>BUILD-CHAIR]-> 2 [BUILD-BACK_2]
+  [<abstract>BUILD-CHAIR]-> 3 [BUILD-SEAT_3]
+  [<abstract>BUILD-CHAIR]-> 4 [ATTACH-BACK-AND-SEAT_4]
+
+
+  [GET-SCREWDRIVER_0] --> [<abstract>GET-SCREWDRIVER|get-screwdriver]
+
+  [BUILD-LEGS_1] -> [BUILD-BACK-LEG_0]
+  [BUILD-LEGS_1] -> [BUILD-BACK-LEG_1]
+  [BUILD-LEGS_1] -> [BUILD-FRONT-LEG_0]
+  [BUILD-LEGS_1] -> [BUILD-FRONT-LEG_1]
+
+  [BUILD-BACK-LEG_0] --> [<abstract>action_set_0|get-dowel|get-leg|get-top-bracket]
+  [BUILD-BACK-LEG_1] --> [<abstract>action_set_0|get-dowel|get-leg|get-top-bracket]
+
+
+  [BUILD-FRONT-LEG_0] --> [<abstract>action_set_1|get-dowel|get-leg|tighten-screw]
+  [BUILD-FRONT-LEG_1] --> [<abstract>action_set_1|get-dowel|get-leg|tighten-screw]
+
+
+  [BUILD-BACK_2] --> [<abstract>actions_set_2|get-board|get-bracket|tighten-screw]
+
+  [BUILD-SEAT_3] --> [<abstract>actions_set_2|get-board|get-bracket|tighten-screw]
+
+  [ATTACH-BACK-AND-SEAT_4] --> [<abstract>actions_set_2|get-board|get-bracket|tighten-screw]"""
 
 graph2 = """
-[<abstract>BUILD-CHAIR]-> 0 [GET-SCREWDRIVER_0]
-[<abstract>BUILD-CHAIR]-> 1 [BUILD-LEGS_1]
-[<abstract>BUILD-CHAIR]-> 2 [BUILD-BACK_2]
-[<abstract>BUILD-CHAIR]-> 3 [BUILD-SEAT_3]
-[<abstract>BUILD-CHAIR]-> 4 [ATTACH-BACK-AND-SEAT_4]
+  [<abstract>BUILD-CHAIR]-> 0 [GET-SCREWDRIVER_0]
+  [<abstract>BUILD-CHAIR]-> 1 [BUILD-LEGS_1]
+  [<abstract>BUILD-CHAIR]-> 2 [BUILD-BACK_2]
+  [<abstract>BUILD-CHAIR]-> 3 [BUILD-SEAT_3]
+  [<abstract>BUILD-CHAIR]-> 4 [ATTACH-BACK-AND-SEAT_4]
 
 
-[GET-SCREWDRIVER_0] --> [get-screwdriver]
+  [GET-SCREWDRIVER_0] --> [get-screwdriver]
 
-[BUILD-LEGS_1] -> [BUILD-BACK-LEG_0]
-[BUILD-LEGS_1] -> [BUILD-BACK-LEG_1]
-[BUILD-LEGS_1] -> [BUILD-FRONT-LEG_0]
-[BUILD-LEGS_1] -> [BUILD-FRONT-LEG_1]
+  [BUILD-LEGS_1] -> [BUILD-BACK-LEG_0]
+  [BUILD-LEGS_1] -> [BUILD-BACK-LEG_1]
+  [BUILD-LEGS_1] -> [BUILD-FRONT-LEG_0]
+  [BUILD-LEGS_1] -> [BUILD-FRONT-LEG_1]
 
-[BUILD-BACK-LEG_0] --> [get-dowel]
-[BUILD-BACK-LEG_0] --> [get-leg]
-[BUILD-BACK-LEG_0] --> [get-top-bracket]
+  [BUILD-BACK-LEG_0] --> [get-dowel]
+  [BUILD-BACK-LEG_0] --> [get-leg]
+  [BUILD-BACK-LEG_0] --> [get-top-bracket]
 
-[BUILD-BACK-LEG_1] --> [get-dowel]
-[BUILD-BACK-LEG_1] --> [get-leg]
-[BUILD-BACK-LEG_1] --> [get-top-bracket]
+  [BUILD-BACK-LEG_1] --> [get-dowel]
+  [BUILD-BACK-LEG_1] --> [get-leg]
+  [BUILD-BACK-LEG_1] --> [get-top-bracket]
 
-[BUILD-FRONT-LEG_0] --> [get-dowel]
-[BUILD-FRONT-LEG_0] --> [get-leg]
-[BUILD-FRONT-LEG_0] --> [tighten-screw]
+  [BUILD-FRONT-LEG_0] --> [get-dowel]
+  [BUILD-FRONT-LEG_0] --> [get-leg]
+  [BUILD-FRONT-LEG_0] --> [tighten-screw]
 
-[BUILD-FRONT-LEG_1] --> [get-dowel]
-[BUILD-FRONT-LEG_1] --> [get-leg]
-[BUILD-FRONT-LEG_1] --> [tighten-screw]
+  [BUILD-FRONT-LEG_1] --> [get-dowel]
+  [BUILD-FRONT-LEG_1] --> [get-leg]
+  [BUILD-FRONT-LEG_1] --> [tighten-screw]
 
-[BUILD-BACK_2] --> [get-board]
-[BUILD-BACK_2] --> [get-bracket]
-[BUILD-BACK_2] --> [tighten-screw]
+  [BUILD-BACK_2] --> [get-board]
+  [BUILD-BACK_2] --> [get-bracket]
+  [BUILD-BACK_2] --> [tighten-screw]
 
-[BUILD-SEAT_3] --> [get-board]
-[BUILD-SEAT_3] --> [get-bracket]
-[BUILD-SEAT_3] --> [tighten-screw]
+  [BUILD-SEAT_3] --> [get-board]
+  [BUILD-SEAT_3] --> [get-bracket]
+  [BUILD-SEAT_3] --> [tighten-screw]
 
-[ATTACH-BACK-AND-SEAT_4] --> [get-board]
-[ATTACH-BACK-AND-SEAT_4] --> [get-bracket]
-[ATTACH-BACK-AND-SEAT_4] --> [tighten-screw]"""
+  [ATTACH-BACK-AND-SEAT_4] --> [get-board]
+  [ATTACH-BACK-AND-SEAT_4] --> [get-bracket]
+  [ATTACH-BACK-AND-SEAT_4] --> [tighten-screw]"""
 
 graph3="""
-[<abstract>BUILD-CHAIR]-> 0 [GET-SCREWDRIVER_0]
-[<abstract>BUILD-CHAIR]-> 1 [BUILD-LEGS_1]
-[<abstract>BUILD-CHAIR]-> 2 [BUILD-BACK_2]
-[<abstract>BUILD-CHAIR]-> 3 [BUILD-SEAT_3]
-[<abstract>BUILD-CHAIR]-> 4 [ATTACH-BACK-AND-SEAT_4]
+  [<abstract>BUILD-CHAIR]-> 0 [GET-SCREWDRIVER_0]
+  [<abstract>BUILD-CHAIR]-> 1 [BUILD-LEGS_1]
+  [<abstract>BUILD-CHAIR]-> 2 [BUILD-BACK_2]
+  [<abstract>BUILD-CHAIR]-> 3 [BUILD-SEAT_3]
+  [<abstract>BUILD-CHAIR]-> 4 [ATTACH-BACK-AND-SEAT_4]
 
 
-[GET-SCREWDRIVER_0] --> [get-screwdriver]
+  [GET-SCREWDRIVER_0] --> [get-screwdriver]
 
-[BUILD-LEGS_1] -> [BUILD-BACK-LEG_0]
-[BUILD-LEGS_1] -> [BUILD-BACK-LEG_1]
-[BUILD-LEGS_1] -> [BUILD-FRONT-LEG_0]
-[BUILD-LEGS_1] -> [BUILD-FRONT-LEG_1]
+  [BUILD-LEGS_1] -> [BUILD-BACK-LEG_0]
+  [BUILD-LEGS_1] -> [BUILD-BACK-LEG_1]
+  [BUILD-LEGS_1] -> [BUILD-FRONT-LEG_0]
+  [BUILD-LEGS_1] -> [BUILD-FRONT-LEG_1]
 
-[BUILD-BACK-LEG_0] --> [get-dowel_0]
-[BUILD-BACK-LEG_0] --> [get-leg_0]
-[BUILD-BACK-LEG_0] --> [get-top-bracket_0]
+  [BUILD-BACK-LEG_0] --> [get-dowel_0]
+  [BUILD-BACK-LEG_0] --> [get-leg_0]
+  [BUILD-BACK-LEG_0] --> [get-top-bracket_0]
 
-[BUILD-BACK-LEG_1] --> [get-dowel_1]
-[BUILD-BACK-LEG_1] --> [get-leg_1]
-[BUILD-BACK-LEG_1] --> [get-top-bracket_1]
+  [BUILD-BACK-LEG_1] --> [get-dowel_1]
+  [BUILD-BACK-LEG_1] --> [get-leg_1]
+  [BUILD-BACK-LEG_1] --> [get-top-bracket_1]
 
-[BUILD-FRONT-LEG_0] --> [get-dowel_2]
-[BUILD-FRONT-LEG_0] --> [get-leg_2]
-[BUILD-FRONT-LEG_0] --> [tighten-screw_0]
+  [BUILD-FRONT-LEG_0] --> [get-dowel_2]
+  [BUILD-FRONT-LEG_0] --> [get-leg_2]
+  [BUILD-FRONT-LEG_0] --> [tighten-screw_0]
 
-[BUILD-FRONT-LEG_1] --> [get-dowel_3]
-[BUILD-FRONT-LEG_1] --> [get-leg_3]
-[BUILD-FRONT-LEG_1] --> [tighten-screw_1]
+  [BUILD-FRONT-LEG_1] --> [get-dowel_3]
+  [BUILD-FRONT-LEG_1] --> [get-leg_3]
+  [BUILD-FRONT-LEG_1] --> [tighten-screw_1]
 
-[BUILD-BACK_2] --> [get-board_0]
-[BUILD-BACK_2] --> [get-bracket_0]
-[BUILD-BACK_2] --> [tighten-screw_2]
+  [BUILD-BACK_2] --> [get-board_0]
+  [BUILD-BACK_2] --> [get-bracket_0]
+  [BUILD-BACK_2] --> [tighten-screw_2]
 
-[BUILD-SEAT_3] --> [get-board_1]
-[BUILD-SEAT_3] --> [get-bracket_1]
-[BUILD-SEAT_3] --> [tighten-screw_3]
+  [BUILD-SEAT_3] --> [get-board_1]
+  [BUILD-SEAT_3] --> [get-bracket_1]
+  [BUILD-SEAT_3] --> [tighten-screw_3]
 
-[ATTACH-BACK-AND-SEAT_4] --> [get-board_2]
-[ATTACH-BACK-AND-SEAT_4] --> [get-bracket_2]
-[ATTACH-BACK-AND-SEAT_4] --> [tighten-screw_4]"""
+  [ATTACH-BACK-AND-SEAT_4] --> [get-board_2]
+  [ATTACH-BACK-AND-SEAT_4] --> [get-bracket_2]
+  [ATTACH-BACK-AND-SEAT_4] --> [tighten-screw_4]"""
 
 def background_thread():
     graph = graph1
@@ -179,6 +208,13 @@ def render_graph2():
 @socketio.on('graph3', namespace='/test')
 def render_graph3():
   graph = graph3
+  socketio.emit('serve',
+                      {'data': graph},
+                      namespace='/test')
+
+@socketio.on('graph4', namespace='/test')
+def render_graph4():
+  graph = graph4
   socketio.emit('serve',
                       {'data': graph},
                       namespace='/test')

@@ -1,0 +1,34 @@
+strict digraph  {
+BASE;
+"BUILD CHAIR";
+"EVENT WITH SCREWDRIVER";
+"get-screwdriver";
+"EVENT WITH BOX";
+"get-screws";
+"BUILD ARTIFACT-LEG";
+"get-dowel";
+"get-foot";
+"get-top-brakcet";
+"screw-in";
+"get-top-bracket";
+"BUILD SEAT";
+"get-top";
+"ATTACH CHAIR-BACK AND SEAT";
+"get-chair-bracket";
+BASE -> "BUILD CHAIR";
+"BUILD CHAIR" -> "EVENT WITH SCREWDRIVER";
+"BUILD CHAIR" -> "EVENT WITH BOX";
+"BUILD CHAIR" -> "BUILD ARTIFACT-LEG";
+"BUILD CHAIR" -> "BUILD SEAT";
+"BUILD CHAIR" -> "ATTACH CHAIR-BACK AND SEAT";
+"EVENT WITH SCREWDRIVER" -> "get-screwdriver";
+"EVENT WITH BOX" -> "get-screws";
+"BUILD ARTIFACT-LEG" -> "get-dowel";
+"BUILD ARTIFACT-LEG" -> "get-foot";
+"BUILD ARTIFACT-LEG" -> "get-top-brakcet";
+"BUILD ARTIFACT-LEG" -> "screw-in";
+"BUILD ARTIFACT-LEG" -> "get-top-bracket";
+"BUILD SEAT" -> "get-top";
+"ATTACH CHAIR-BACK AND SEAT" -> "get-dowel";
+"ATTACH CHAIR-BACK AND SEAT" -> "get-chair-bracket";
+}
