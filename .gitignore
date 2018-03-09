@@ -103,3 +103,15 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+
+# misc
+knowledgebase.py
+mergetree.py
+mini_ontology.py
+ontosend.py
+maketree.py
+tmrutils.py
+treenode.py
+treetest.py
+
