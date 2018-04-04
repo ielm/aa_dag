@@ -15,6 +15,39 @@ socketio = SocketIO(app, async_mode=async_mode)
 thread = None
 thread_lock = Lock()
 
+graphDot = """
+[BUILD CHAIR-0]-> [EVENT WITH SCREWDRIVER-1]
+[BUILD CHAIR-0]-> [EVENT WITH BOX-1]
+[BUILD CHAIR-0]-> [BUILD ARTIFACT-LEG-1]
+[BUILD CHAIR-0]-> [BUILD ARTIFACT-LEG-1]
+[BUILD CHAIR-0]-> [BUILD ARTIFACT-LEG-1]
+[BUILD CHAIR-0]-> [BUILD ARTIFACT-LEG-1]
+[BUILD CHAIR-0]-> [BUILD SEAT-1]
+[BUILD CHAIR-0]-> [ATTACH CHAIR-BACK AND SEAT-1]
+[EVENT WITH SCREWDRIVER-0]-> [get-screwdriver-1]
+[EVENT WITH BOX-0]-> [get-screws-1]
+[BUILD ARTIFACT-LEG-0]-> [get-dowel-1]
+[BUILD ARTIFACT-LEG-0]-> [get-foot-1]
+[BUILD ARTIFACT-LEG-0]-> [get-top-brakcet-1]
+[BUILD ARTIFACT-LEG-0]-> [screw-in-1]
+[BUILD ARTIFACT-LEG-1]-> [get-dowel-1]
+[BUILD ARTIFACT-LEG-1]-> [get-foot-1]
+[BUILD ARTIFACT-LEG-1]-> [get-top-brakcet-1]
+[BUILD ARTIFACT-LEG-1]-> [screw-in-1]
+[BUILD ARTIFACT-LEG-2]-> [get-dowel-1]
+[BUILD ARTIFACT-LEG-2]-> [get-foot-1]
+[BUILD ARTIFACT-LEG-2]-> [get-top-bracket-1]
+[BUILD ARTIFACT-LEG-3]-> [get-dowel-1]
+[BUILD ARTIFACT-LEG-3]-> [get-foot-1]
+[BUILD ARTIFACT-LEG-3]-> [get-top-bracket-1]
+[BUILD SEAT-0]-> [get-top-1]
+[ATTACH CHAIR-BACK AND SEAT-0]-> [get-dowel-1]
+[ATTACH CHAIR-BACK AND SEAT-0]-> [get-dowel-1]
+[ATTACH CHAIR-BACK AND SEAT-0]-> [get-chair-bracket-1]
+[ATTACH CHAIR-BACK AND SEAT-0]-> [get-chair-bracket-1]
+
+"""
+
 graph1 = """
   [<abstract>BUILD-CHAIR]-> 0 [GET-SCREWDRIVER_0]
   [<abstract>BUILD-CHAIR]-> 1 [BUILD-LEGS_1]
@@ -52,26 +85,26 @@ graph4 = """
   [<abstract>BUILD-CHAIR]-> 4 [ATTACH-BACK-AND-SEAT_4]
 
 
-  [GET-SCREWDRIVER_0] --> [<abstract>GET-SCREWDRIVER|get-screwdriver]
+  [GET-SCREWDRIVER_0] --> [<abstract>action_set_0|get-screwdriver]
 
   [BUILD-LEGS_1] -> [BUILD-BACK-LEG_0]
   [BUILD-LEGS_1] -> [BUILD-BACK-LEG_1]
   [BUILD-LEGS_1] -> [BUILD-FRONT-LEG_0]
   [BUILD-LEGS_1] -> [BUILD-FRONT-LEG_1]
 
-  [BUILD-BACK-LEG_0] --> [<abstract>action_set_0|get-dowel|get-leg|get-top-bracket]
-  [BUILD-BACK-LEG_1] --> [<abstract>action_set_0|get-dowel|get-leg|get-top-bracket]
+  [BUILD-BACK-LEG_0] --> [<abstract>action_set_1|get-dowel|get-leg|get-top-bracket]
+  [BUILD-BACK-LEG_1] --> [<abstract>action_set_1|get-dowel|get-leg|get-top-bracket]
 
 
-  [BUILD-FRONT-LEG_0] --> [<abstract>action_set_1|get-dowel|get-leg|tighten-screw]
-  [BUILD-FRONT-LEG_1] --> [<abstract>action_set_1|get-dowel|get-leg|tighten-screw]
+  [BUILD-FRONT-LEG_0] --> [<abstract>action_set_2|get-dowel|get-leg|tighten-screw]
+  [BUILD-FRONT-LEG_1] --> [<abstract>action_set_2|get-dowel|get-leg|tighten-screw]
 
 
-  [BUILD-BACK_2] --> [<abstract>actions_set_2|get-board|get-bracket|tighten-screw]
+  [BUILD-BACK_2] --> [<abstract>action_set_3|get-board|get-bracket|tighten-screw]
 
-  [BUILD-SEAT_3] --> [<abstract>actions_set_2|get-board|get-bracket|tighten-screw]
+  [BUILD-SEAT_3] --> [<abstract>action_set_3|get-board|get-bracket|tighten-screw]
 
-  [ATTACH-BACK-AND-SEAT_4] --> [<abstract>actions_set_2|get-board|get-bracket|tighten-screw]"""
+  [ATTACH-BACK-AND-SEAT_4] --> [<abstract>action_set_3|get-board|get-bracket|tighten-screw]"""
 
 graph2 = """
   [<abstract>BUILD-CHAIR]-> 0 [GET-SCREWDRIVER_0]
@@ -218,6 +251,14 @@ def render_graph4():
   socketio.emit('serve',
                       {'data': graph},
                       namespace='/test')
+
+@socketio.on('graphDot', namespace='/test')
+def render_graph4():
+  graph = graphDot
+  socketio.emit('serve',
+                      {'data': graph},
+                      namespace='/test')
+
 
 @socketio.on('disconnect', namespace='/test')
 def test_disconnect():

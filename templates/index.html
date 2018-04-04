@@ -69,6 +69,10 @@
                 socket.emit('graph4');
                 return false;
             });
+            $('form#graphDot').submit(function(event) {
+                socket.emit('graphDot');
+                return false;
+            });
             $('form#disconnect').submit(function(event) {
                 socket.emit('disconnect_request');
                 return false;
@@ -92,6 +96,9 @@
     </form>
     <form id="graph4" method="post" action="#">
       <input type="submit" value="graph4">
+    </form>
+    <form id="graphDot" method="post" action="#">
+      <input type="submit" value="graphDot">
     </form>
     <form id="disconnect" method="POST" action="#">
       <input type="submit" value="Disconnect">
